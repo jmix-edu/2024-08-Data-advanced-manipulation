@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
-      title="msg://projectListView.title"
-      focusComponent="projectsDataGrid">
+      title="msg://timeEntryListView.title"
+      focusComponent="timeEntriesDataGrid">
     <data>
-        <collection id="projectsDc"
-                    class="com.company.jmixpm.entity.Project">
+        <collection id="timeEntriesDc"
+                    class="com.company.jmixpm.entity.TimeEntry">
             <fetchPlan extends="_base">
-                <property name="manager" fetchPlan="_base"/>
-                <property name="roadmap" fetchPlan="_base"/>
+                <property name="task" fetchPlan="_base"/>
+                <property name="user" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="projectsDl" readOnly="true">
+            <loader id="timeEntriesDl" readOnly="true">
                 <query>
-                    <![CDATA[select e from Project e]]>
+                    <![CDATA[select e from TimeEntry e]]>
                 </query>
             </loader>
         </collection>
@@ -30,19 +30,19 @@
     </actions>
     <layout>
         <genericFilter id="genericFilter"
-                       dataLoader="projectsDl">
+                       dataLoader="timeEntriesDl">
             <properties include=".*"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="createBtn" action="projectsDataGrid.create"/>
-            <button id="editBtn" action="projectsDataGrid.edit"/>
-            <button id="removeBtn" action="projectsDataGrid.remove"/>
-            <simplePagination id="pagination" dataLoader="projectsDl"/>
+            <button id="createBtn" action="timeEntriesDataGrid.create"/>
+            <button id="editBtn" action="timeEntriesDataGrid.edit"/>
+            <button id="removeBtn" action="timeEntriesDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="timeEntriesDl"/>
         </hbox>
-        <dataGrid id="projectsDataGrid"
+        <dataGrid id="timeEntriesDataGrid"
                   width="100%"
                   minHeight="20em"
-                  dataContainer="projectsDc"
+                  dataContainer="timeEntriesDc"
                   columnReorderingAllowed="true">
             <actions>
                 <action id="create" type="list_create"/>
@@ -50,12 +50,11 @@
                 <action id="remove" type="list_remove"/>
             </actions>
             <columns resizable="true">
-                <column property="name"/>
-                <column property="startDate"/>
-                <column property="endDate"/>
-                <column property="manager"/>
-                <column property="status"/>
-                <column property="roadmap"/>
+                <column property="task"/>
+                <column property="timeSpent"/>
+                <column property="entryDate"/>
+                <column property="user"/>
+                <column property="description"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

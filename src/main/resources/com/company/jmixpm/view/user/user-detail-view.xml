@@ -5,8 +5,11 @@
     <data>
         <instance id="userDc"
                   class="com.company.jmixpm.entity.User">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="contactInformation" fetchPlan="_base"/>
+            </fetchPlan>
             <loader/>
+            <instance id="contactInformationDc" property="contactInformation"/>
         </instance>
     </data>
     <actions>
@@ -29,10 +32,18 @@
                            visible="false"/>
             <textField id="firstNameField" property="firstName"/>
             <textField id="lastNameField" property="lastName"/>
-            <textField id="emailField" property="email"/>
             <comboBox id="timeZoneField" property="timeZoneId"/>
             <checkbox id="activeField" property="active"/>
+
         </formLayout>
+        <details id="CIDetails" summaryText="Contact Information" opened="true">
+            <formLayout id="CIForm" dataContainer="contactInformationDc">
+                <textField id="contactInformationEmailField" property="email"/>
+                <textField id="contactInformationPhoneField" property="phone"/>
+                <textField id="contactInformationAddressField" property="address"/>
+                <textField id="contactInformationUrlField" property="url"/>
+            </formLayout>
+        </details>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>

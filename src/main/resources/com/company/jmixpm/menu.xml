@@ -5,6 +5,8 @@
         <item view="User.list" title="msg://com.company.jmixpm.view.user/UserListView.title"/>
         <item view="Project.list" title="msg://com.company.jmixpm.view.project/projectListView.title"/>
         <item view="Task_.list" title="msg://com.company.jmixpm.view.task/taskListView.title"/>
+        <item view="TimeEntry.list" title="msg://com.company.jmixpm.view.timeentry/timeEntryListView.title"/>
+        <item view="Roadmap.list" title="msg://com.company.jmixpm.view.roadmap/roadmapListView.title"/>
     </menu>
 
 </menu-config>

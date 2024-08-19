@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
-      title="msg://projectListView.title"
-      focusComponent="projectsDataGrid">
+      title="msg://roadmapListView.title"
+      focusComponent="roadmapsDataGrid">
     <data>
-        <collection id="projectsDc"
-                    class="com.company.jmixpm.entity.Project">
-            <fetchPlan extends="_base">
-                <property name="manager" fetchPlan="_base"/>
-                <property name="roadmap" fetchPlan="_base"/>
-            </fetchPlan>
-            <loader id="projectsDl" readOnly="true">
+        <collection id="roadmapsDc"
+                    class="com.company.jmixpm.entity.Roadmap">
+            <fetchPlan extends="_base"/>
+            <loader id="roadmapsDl" readOnly="true">
                 <query>
-                    <![CDATA[select e from Project e]]>
+                    <![CDATA[select e from Roadmap e]]>
                 </query>
             </loader>
         </collection>
@@ -30,19 +27,19 @@
     </actions>
     <layout>
         <genericFilter id="genericFilter"
-                       dataLoader="projectsDl">
+                       dataLoader="roadmapsDl">
             <properties include=".*"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="createBtn" action="projectsDataGrid.create"/>
-            <button id="editBtn" action="projectsDataGrid.edit"/>
-            <button id="removeBtn" action="projectsDataGrid.remove"/>
-            <simplePagination id="pagination" dataLoader="projectsDl"/>
+            <button id="createBtn" action="roadmapsDataGrid.create"/>
+            <button id="editBtn" action="roadmapsDataGrid.edit"/>
+            <button id="removeBtn" action="roadmapsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="roadmapsDl"/>
         </hbox>
-        <dataGrid id="projectsDataGrid"
+        <dataGrid id="roadmapsDataGrid"
                   width="100%"
                   minHeight="20em"
-                  dataContainer="projectsDc"
+                  dataContainer="roadmapsDc"
                   columnReorderingAllowed="true">
             <actions>
                 <action id="create" type="list_create"/>
@@ -53,9 +50,7 @@
                 <column property="name"/>
                 <column property="startDate"/>
                 <column property="endDate"/>
-                <column property="manager"/>
-                <column property="status"/>
-                <column property="roadmap"/>
+                <column property="goal"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

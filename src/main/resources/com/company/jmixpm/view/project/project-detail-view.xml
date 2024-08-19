@@ -7,8 +7,13 @@
                   class="com.company.jmixpm.entity.Project">
             <fetchPlan extends="_base">
                 <property name="manager" fetchPlan="_base"/>
+                <property name="participants" fetchPlan="_base"/>
+                <property name="tasks" fetchPlan="_base"/>
+                <property name="roadmap" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
+            <collection id="participantsDc" property="participants"/>
+            <collection id="tasksDc" property="tasks"/>
         </instance>
     </data>
     <facets>
@@ -29,7 +34,78 @@
                     <action id="entityClear" type="entity_clear"/>
                 </actions>
             </entityPicker>
+            <select id="statusField" property="status"/>
         </formLayout>
+        <details id="roadmapDetails" summaryText="msg://roadmapDetails.summary" width="100%" opened="true">
+            <formLayout id="roadmapForm" dataContainer="projectDc">
+                <textField id="roadmapNameField" property="roadmap.name"/>
+                <datePicker id="roadmapStartDateField" property="roadmap.startDate"/>
+                <datePicker id="roadmapEndDateField" property="roadmap.endDate"/>
+                <textArea id="roadmapGoalField" property="roadmap.goal"/>
+            </formLayout>
+        </details>
+        <tabSheet id="tabSheet" width="100%">
+            <tab id="participantsTab" label="msg://tabSheet.participantsTab.label">
+                <vbox id="wrapper1" width="100%" height="100%" padding="false">
+                    <hbox id="participantsButtonsPanel" classNames="buttons-panel">
+                        <button action="participantsDataGrid.create"/>
+                        <button action="participantsDataGrid.add"/>
+                        <button action="participantsDataGrid.exclude"/>
+                    </hbox>
+                    <dataGrid id="participantsDataGrid"
+                              dataContainer="participantsDc"
+                              width="100%"
+                              minHeight="10em">
+                        <actions>
+                            <action id="create" type="list_create">
+                                <properties>
+                                    <property name="openMode" value="DIALOG"/>
+                                </properties>
+                            </action>
+                            <action id="add" type="list_add"/>
+                            <action id="exclude" type="list_exclude"/>
+                        </actions>
+                        <columns>
+                            <column property="username"/>
+                            <column property="firstName"/>
+                            <column property="lastName"/>
+                        </columns>
+                    </dataGrid>
+                </vbox>
+            </tab>
+            <tab id="tasksTab" label="msg://tabSheet.tasksTab.label">
+                <vbox id="wrapper2" width="100%" height="100%" padding="false">
+                    <hbox id="tasksButtonsPanel" classNames="buttons-panel">
+                        <button action="tasksDataGrid.create"/>
+                        <button action="tasksDataGrid.edit"/>
+                        <button action="tasksDataGrid.remove"/>
+                    </hbox>
+                    <dataGrid id="tasksDataGrid"
+                              dataContainer="tasksDc"
+                              width="100%"
+                              minHeight="10em">
+                        <actions>
+                            <action id="create" type="list_create">
+                                <properties>
+                                    <property name="openMode" value="DIALOG"/>
+                                </properties>
+                            </action>
+                            <action id="edit" type="list_edit">
+                                <properties>
+                                    <property name="openMode" value="DIALOG"/>
+                                </properties>
+                            </action>
+                            <action id="remove" type="list_remove"/>
+                        </actions>
+                        <columns>
+                            <column property="name"/>
+                            <column property="startDate"/>
+                            <column property="estimatedEfforts"/>
+                        </columns>
+                    </dataGrid>
+                </vbox>
+            </tab>
+        </tabSheet>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>
