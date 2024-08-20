@@ -56,6 +56,7 @@
                 <column property="manager"/>
                 <column property="status"/>
                 <column property="roadmap"/>
+                <column property="projectLabels"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

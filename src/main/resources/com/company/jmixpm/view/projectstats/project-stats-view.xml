@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://projectStatsView.title">
+
+    <data>
+        <collection id="projectStatsDc" class="com.company.jmixpm.entity.ProjectStats">
+            <loader id="projectStatsDl" readOnly="true"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <hbox>
+            <button id="refreshBtn" action="projectStatsDataGrid.refresh"/>
+        </hbox>
+        <dataGrid id="projectStatsDataGrid"
+                  dataContainer="projectStatsDc"
+                  width="100%">
+            <actions>
+                <action id="refresh" type="list_refresh"/>
+            </actions>
+            <columns>
+                <column property="projectName"/>
+                <column property="tasksCount"/>
+                <column property="plannedEfforts"/>
+                <column property="actualEfforts"/>
+            </columns>
+        </dataGrid>
+    </layout>
+</view>

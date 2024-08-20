@@ -1,6 +1,8 @@
 package com.company.jmixpm.entity;
 
 import io.jmix.core.HasTimeZone;
+import io.jmix.core.annotation.DeletedBy;
+import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -10,8 +12,13 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,8 +73,80 @@ public class User implements JmixUserDetails, HasTimeZone {
     })
     private ContactInformation contactInformation;
 
+    @DeletedBy
+    @Column(name = "DELETED_BY")
+    private String deletedBy;
+
+    @DeletedDate
+    @Column(name = "DELETED_DATE")
+    private OffsetDateTime deletedDate;
+
+    @CreatedBy
+    @Column(name = "CREATED_BY")
+    private String createdBy;
+
+    @CreatedDate
+    @Column(name = "CREATED_DATE")
+    private OffsetDateTime createdDate;
+
+    @LastModifiedBy
+    @Column(name = "LAST_MODIFIED_BY")
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    @Column(name = "LAST_MODIFIED_DATE")
+    private OffsetDateTime lastModifiedDate;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public OffsetDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(OffsetDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public OffsetDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(OffsetDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public OffsetDateTime getDeletedDate() {
+        return deletedDate;
+    }
+
+    public void setDeletedDate(OffsetDateTime deletedDate) {
+        this.deletedDate = deletedDate;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+    }
 
     public ContactInformation getContactInformation() {
         return contactInformation;

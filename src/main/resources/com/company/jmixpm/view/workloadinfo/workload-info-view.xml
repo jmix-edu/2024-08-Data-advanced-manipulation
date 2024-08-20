@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://workloadInfoView.title">
+    <data>
+        <keyValueInstance id="workloadDc">
+            <properties>
+                <property name="assignee" class="com.company.jmixpm.entity.User"/>
+                <property name="estimatedEfforts" datatype="long"/>
+            </properties>
+        </keyValueInstance>
+    </data>
+    <actions>
+        <action id="close" type="view_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="workloadDc">
+            <entityPicker id="assigneeField"
+                          property="assignee"
+                          label="msg://assigneeField.label"/>
+            <textField id="estimatedEffortsField"
+                       property="estimatedEfforts"
+                       label="msg://estimatedEffortsField.label"/>
+        </formLayout>
+        <hbox justifyContent="END" width="100%">
+            <button id="closeBtn" action="close"/>
+        </hbox>
+    </layout></view>

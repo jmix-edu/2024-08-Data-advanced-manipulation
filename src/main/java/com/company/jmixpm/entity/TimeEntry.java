@@ -7,9 +7,9 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.annotation.JmixProperty;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
-import io.jmix.data.DdlGeneration;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -31,13 +31,17 @@ public class TimeEntry {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Task task;
 
+    @Max(5)
+    @Min(2)
     @Column(name = "TIME_SPENT", nullable = false)
+    @Positive(message = "Spent time can not be less or equal zero!")
     @NotNull
     @JmixProperty(mandatory = true)
     private Integer timeSpent;
 
     @Column(name = "ENTRY_DATE", nullable = false)
     @NotNull
+    @PastOrPresent
     private LocalDateTime entryDate;
 
     @JoinColumn(name = "USER_ID", nullable = false)
@@ -47,6 +51,7 @@ public class TimeEntry {
 
     @Column(name = "DESCRIPTION")
     @Lob
+    @Length(min = 10, message = "{msg://com.company.jmixpm.entity/timeEntry.descriprion.error}")
     private String description;
 
     public String getDescription() {

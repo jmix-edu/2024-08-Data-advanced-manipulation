@@ -1,8 +1,6 @@
 package com.company.jmixpm.entity;
 
-import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
-import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
@@ -38,10 +36,33 @@ public class Task {
 
     @Column(name = "ESTIMATED_EFFORTS")
     private Integer estimatedEfforts;
-    @OnDeleteInverse(DeletePolicy.CASCADE)
+
     @JoinColumn(name = "PROJECT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Project project;
+
+    @Column(name = "LABEL")
+    private String label;
+
+    @NotNull
+    @Column(name = "CLOSED", nullable = false)
+    private Boolean closed = false;
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public Project getProject() {
         return project;

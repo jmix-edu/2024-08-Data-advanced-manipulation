@@ -35,6 +35,7 @@
                 </actions>
             </entityPicker>
             <select id="statusField" property="status"/>
+            <textField id="projectLabelsField" property="projectLabels" readOnly="true"/>
         </formLayout>
         <details id="roadmapDetails" summaryText="msg://roadmapDetails.summary" width="100%" opened="true">
             <formLayout id="roadmapForm" dataContainer="projectDc">
