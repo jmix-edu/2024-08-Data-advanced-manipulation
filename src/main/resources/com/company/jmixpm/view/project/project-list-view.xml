@@ -9,6 +9,7 @@
             <fetchPlan extends="_base">
                 <property name="manager" fetchPlan="_base"/>
                 <property name="roadmap" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="projectsDl" readOnly="true">
                 <query>
@@ -56,7 +57,13 @@
                 <column property="manager"/>
                 <column property="status"/>
                 <column property="roadmap"/>
-                <column property="projectLabels"/>
+                <column property="projectLabels" editable="true"/>
+                <editorActionsColumn>
+                    <editButton icon="EDIT"/>
+                    <cancelButton icon="BAN"/>
+                </editorActionsColumn>
+                <column property="totalEstimatedEfforts"/>
+                <column property="owner"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

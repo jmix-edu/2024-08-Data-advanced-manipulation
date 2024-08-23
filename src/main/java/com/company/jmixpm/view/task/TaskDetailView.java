@@ -36,7 +36,7 @@ public class TaskDetailView extends StandardDetailView<Task> {
 
 //            labelField.setItems(new ListDataProvider<>(project.getProjectLabels().getLabels()));
 
-//            labelsDataView.addItems(project.getProjectLabels().getLabels());
+            labelsDataView.addItems(project.getProjectLabels().getLabels());
         }
     }
     

@@ -37,6 +37,8 @@
                     <action id="entityClear" type="entity_clear"/>
                 </actions>
             </entityPicker>
+            <checkbox id="closedField" property="closed"/>
+            <dateTimePicker id="supposedEndDateField" property="supposedEndDate"/>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>

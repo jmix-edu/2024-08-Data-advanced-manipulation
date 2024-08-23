@@ -1,16 +1,20 @@
 package com.company.jmixpm.entity;
 
 import com.company.jmixpm.datatype.ProjectLabels;
+import com.company.jmixpm.validation.ProjectLabelsSize;
+import com.company.jmixpm.validation.ValidDatesProject;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.annotation.DeletedBy;
 import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDelete;
-import io.jmix.core.metamodel.annotation.Composition;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.entity.annotation.SystemLevel;
+import io.jmix.core.metamodel.annotation.*;
+import io.jmix.core.validation.group.UiCrossFieldChecks;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.Default;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -23,12 +27,14 @@ import java.util.UUID;
         @Index(name = "IDX_PROJECT_ROADMAP", columnList = "ROADMAP_ID")
 })
 @Entity
+@ValidDatesProject(groups = {Default.class, UiCrossFieldChecks.class})
 public class Project {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
 
+    @NotBlank
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
@@ -64,6 +70,7 @@ public class Project {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Roadmap roadmap;
 
+    @ProjectLabelsSize(min = 3, max = 5)
     @Column(name = "PROJECT_LABELS")
     private ProjectLabels projectLabels;
 
@@ -74,6 +81,42 @@ public class Project {
     @DeletedDate
     @Column(name = "DELETED_DATE")
     private OffsetDateTime deletedDate;
+
+    @Column(name = "TOTAL_ESTIMATED_EFFORTS")
+    private Integer totalEstimatedEfforts;
+
+    @SystemLevel
+    @Column(name = "OWNER_ID")
+    private UUID ownerId;
+
+    @DependsOnProperties({"ownerId"})
+    @JmixProperty
+    @Transient
+    private Customer owner;
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Integer getTotalEstimatedEfforts() {
+        return totalEstimatedEfforts;
+    }
+
+    public void setTotalEstimatedEfforts(Integer totalEstimatedEfforts) {
+        this.totalEstimatedEfforts = totalEstimatedEfforts;
+    }
 
     public OffsetDateTime getDeletedDate() {
         return deletedDate;

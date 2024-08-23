@@ -10,6 +10,7 @@
                 <property name="participants" fetchPlan="_base"/>
                 <property name="tasks" fetchPlan="_base"/>
                 <property name="roadmap" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
             <collection id="participantsDc" property="participants"/>
@@ -25,7 +26,7 @@
     </actions>
     <layout>
         <formLayout id="form" dataContainer="projectDc">
-            <textField id="nameField" property="name"/>
+            <textField id="nameField" property="name" requiredMessage="msg://fillName.msg"/>
             <dateTimePicker id="startDateField" property="startDate"/>
             <dateTimePicker id="endDateField" property="endDate"/>
             <entityPicker id="managerField" property="manager">
@@ -36,8 +37,14 @@
             </entityPicker>
             <select id="statusField" property="status"/>
             <textField id="projectLabelsField" property="projectLabels" readOnly="true"/>
+            <entityPicker id="ownerField" property="owner">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
         </formLayout>
-        <details id="roadmapDetails" summaryText="msg://roadmapDetails.summary" width="100%" opened="true">
+        <details id="roadmapDetails" summaryText="msg://roadmapDetails.summary" width="100%" opened="false">
             <formLayout id="roadmapForm" dataContainer="projectDc">
                 <textField id="roadmapNameField" property="roadmap.name"/>
                 <datePicker id="roadmapStartDateField" property="roadmap.startDate"/>
@@ -110,6 +117,10 @@
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>
+            <button id="commitWithBeanValidation"
+                    text="msg://commitWithBeanValidation.text"/>
+            <button id="performBeanValidationBtn"
+                    text="msg://performBeanValidationBtn.text"/>
         </hbox>
     </layout>
 </view>
