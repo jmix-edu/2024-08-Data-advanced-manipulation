@@ -58,6 +58,7 @@
                 <action id="changePassword" type="sec_changePassword"/>
                 <action id="resetPassword" type="sec_resetPassword"/>
                 <action id="showUserSubstitutions" type="sec_showUserSubstitutions"/>
+                <action id="showUserProjects" text="msg://showUserProjects.text" type="list_itemTracking"/>
             </actions>
             <columns resizable="true">
                 <column property="username"/>

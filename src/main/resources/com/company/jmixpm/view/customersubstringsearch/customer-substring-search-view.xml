@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://customerSubstringSearchView.title">
+    <data>
+        <collection id="customersDc"
+                    class="com.company.jmixpm.entity.Customer"
+                    fetchPlan="_base">
+            <loader id="customersDl">
+                <query>
+                    <![CDATA[select e from Customer e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.firstName like :name</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator>
+            <refresh loader="customersDl">
+                <onViewEvent type="BeforeShow"/>
+                <onComponentValueChanged component="firstNameField"
+                                         param="name"
+                                         likeClause="CASE_INSENSITIVE"/>
+            </refresh>
+        </dataLoadCoordinator>
+    </facets>
+    <layout>
+        <textField id="firstNameField" datatype="string"/>
+        <dataGrid id="customersTable"
+                  width="100%"
+                  minHeight="100%"
+                  dataContainer="customersDc">
+            <columns>
+                <column property="firstName"/>
+                <column property="lastName"/>
+                <column property="email"/>
+            </columns>
+        </dataGrid>
+    </layout>
+</view>

@@ -7,12 +7,12 @@ import com.company.jmixpm.entity.Project;
 import com.company.jmixpm.entity.Roadmap;
 import com.company.jmixpm.view.main.MainView;
 
+import com.company.jmixpm.view.user.UserListView;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.DataManager;
 import io.jmix.core.validation.group.UiComponentChecks;
-import io.jmix.core.validation.group.UiCrossFieldChecks;
 import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.kit.component.button.JmixButton;
@@ -20,6 +20,7 @@ import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.view.*;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,8 +44,9 @@ public class ProjectDetailView extends StandardDetailView<Project> {
     @Autowired
     private Notifications notifications;
     @Autowired
-    private jakarta.validation.Validator validator;
-
+    private Validator validator;
+    @ViewComponent
+    private TypedTextField<String> nameField;
 
     @Subscribe
     public void onInitEntity(final InitEntityEvent<Project> event) {
@@ -72,7 +74,6 @@ public class ProjectDetailView extends StandardDetailView<Project> {
             notifications.create(sb.toString())
                     .withPosition(Notification.Position.TOP_CENTER)
                     .show();
-
         }
     }
 
@@ -95,5 +96,10 @@ public class ProjectDetailView extends StandardDetailView<Project> {
                 .withPosition(Notification.Position.TOP_CENTER)
                 .show();
 
+    }
+
+    @Install(to = "participantsDataGrid.add", subject = "viewConfigurer")
+    private void participantsDataGridAddViewConfigurer(final UserListView userListView) {
+            userListView.setFilterProject(getEditedEntity());
     }
 }

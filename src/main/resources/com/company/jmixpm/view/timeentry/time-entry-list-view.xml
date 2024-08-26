@@ -16,6 +16,18 @@
                 </query>
             </loader>
         </collection>
+        <collection id="lastWeekTimeEntriesDc"
+                    class="com.company.jmixpm.entity.TimeEntry">
+            <fetchPlan extends="_base">
+                <property name="task" fetchPlan="_base"/>
+                <property name="user" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="lastWeekTimeEntriesDl">
+                <query>
+                    <![CDATA[select e from TimeEntry e where @between(e.entryDate, now-7, now, day)]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -29,34 +41,69 @@
         <action id="discardAction" type="lookup_discard"/>
     </actions>
     <layout>
-        <genericFilter id="genericFilter"
-                       dataLoader="timeEntriesDl">
-            <properties include=".*"/>
-        </genericFilter>
-        <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="createBtn" action="timeEntriesDataGrid.create"/>
-            <button id="editBtn" action="timeEntriesDataGrid.edit"/>
-            <button id="removeBtn" action="timeEntriesDataGrid.remove"/>
-            <simplePagination id="pagination" dataLoader="timeEntriesDl"/>
-        </hbox>
-        <dataGrid id="timeEntriesDataGrid"
+        <tabSheet id="tabSheet"
                   width="100%"
-                  minHeight="20em"
-                  dataContainer="timeEntriesDc"
-                  columnReorderingAllowed="true">
-            <actions>
-                <action id="create" type="list_create"/>
-                <action id="edit" type="list_edit"/>
-                <action id="remove" type="list_remove"/>
-            </actions>
-            <columns resizable="true">
-                <column property="task"/>
-                <column property="timeSpent"/>
-                <column property="entryDate"/>
-                <column property="user"/>
-                <column property="description"/>
-            </columns>
-        </dataGrid>
+                  height="100%">
+            <tab id="browseTab"
+                 label="msg://browseTab.label">
+                <vbox padding="false"
+                      height="100%">
+                    <genericFilter id="genericFilter"
+                                   dataLoader="timeEntriesDl">
+                        <properties include=".*"/>
+                    </genericFilter>
+                    <hbox id="buttonsPanel" classNames="buttons-panel">
+                        <button id="createBtn" action="timeEntriesDataGrid.create"/>
+                        <button id="editBtn" action="timeEntriesDataGrid.edit"/>
+                        <button id="removeBtn" action="timeEntriesDataGrid.remove"/>
+                        <simplePagination id="pagination" dataLoader="timeEntriesDl"/>
+                    </hbox>
+                    <dataGrid id="timeEntriesDataGrid"
+                              width="100%"
+                              minHeight="20em"
+                              dataContainer="timeEntriesDc"
+                              columnReorderingAllowed="true">
+                        <actions>
+                            <action id="create" type="list_create"/>
+                            <action id="edit" type="list_edit"/>
+                            <action id="remove" type="list_remove"/>
+                        </actions>
+                        <columns resizable="true">
+                            <column property="task"/>
+                            <column property="timeSpent"/>
+                            <column property="entryDate"/>
+                            <column property="user"/>
+                            <column property="description"/>
+                        </columns>
+                    </dataGrid>
+                </vbox>
+            </tab>
+            <tab id="lastWeekTimeEntriesTab"
+                 label="msg://lastWeekTimeEntries.label">
+                <vbox padding="false" height="100%">
+                    <hbox padding="false">
+                        <button id="lastWeekRefreshBtn"
+                                action="lastWeekTimeEntriesDataGrid.refresh"/>
+                    </hbox>
+                    <dataGrid id="lastWeekTimeEntriesDataGrid"
+                              width="100%"
+                              minHeight="20em"
+                              dataContainer="lastWeekTimeEntriesDc"
+                              columnReorderingAllowed="true">
+                        <actions>
+                            <action id="refresh" type="list_refresh"/>
+                        </actions>
+                        <columns resizable="true">
+                            <column property="task"/>
+                            <column property="timeSpent"/>
+                            <column property="entryDate"/>
+                            <column property="user"/>
+                            <column property="description"/>
+                        </columns>
+                    </dataGrid>
+                </vbox>
+            </tab>
+        </tabSheet>
         <hbox id="lookupActions" visible="false">
             <button id="selectBtn" action="selectAction"/>
             <button id="discardBtn" action="discardAction"/>

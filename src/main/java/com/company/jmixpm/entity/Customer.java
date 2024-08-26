@@ -4,11 +4,9 @@ import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.annotation.Store;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -30,6 +28,17 @@ public class Customer {
 
     @Column(name = "EMAIL")
     private String email;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public String getEmail() {
         return email;

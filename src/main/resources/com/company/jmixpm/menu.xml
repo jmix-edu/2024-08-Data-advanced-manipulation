@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/flowui/menu">
+    <menu id="customers" title="msg://com.company.jmixpm/menu.customers">
+        <item view="Customer.list" title="msg://com.company.jmixpm.view.customer/customerListView.title"/>
+        <item view="Order_.list" title="msg://com.company.jmixpm.view.order/orderListView.title"/>
+        <item view="CustomSearhView" title="msg://com.company.jmixpm.view.customsearh/customSearhView.title"/>
+        <item view="CustomerSubstringSearchView"
+              title="msg://com.company.jmixpm.view.customersubstringsearch/customerSubstringSearchView.title"/>
+        <item view="UserProjectsDialog"
+              title="msg://com.company.jmixpm.view.userprojectsdialog/userProjectsDialog.title"/>
+    </menu>
 
     <menu id="application" title="msg://com.company.jmixpm/menu.application.title" opened="true">
         <item view="User.list" title="msg://com.company.jmixpm.view.user/UserListView.title"/>
@@ -9,7 +18,7 @@
         <item view="Roadmap.list" title="msg://com.company.jmixpm.view.roadmap/roadmapListView.title"/>
         <item view="ProjectStatsView" title="msg://com.company.jmixpm.view.projectstats/projectStatsView.title"/>
         <item view="WorkloadView" title="msg://com.company.jmixpm.view.workload/workloadView.title"/>
-        <item view="Customer.list" title="msg://com.company.jmixpm.view.customer/customerListView.title"/>
+        <item view="Task_repo.list" title="msg://com.company.jmixpm.view.task/taskRepoListView.title"/>
     </menu>
 
 </menu-config>

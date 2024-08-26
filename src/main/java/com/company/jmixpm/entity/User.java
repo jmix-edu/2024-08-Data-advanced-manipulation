@@ -10,6 +10,7 @@ import io.jmix.core.entity.annotation.SystemLevel;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.pessimisticlock.annotation.PessimisticLock;
 import io.jmix.security.authentication.JmixUserDetails;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -26,6 +27,7 @@ import java.util.UUID;
 
 @JmixEntity
 @Entity
+@PessimisticLock(timeoutSec = 10)
 @Table(name = "USER_", indexes = {
         @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true)
 })

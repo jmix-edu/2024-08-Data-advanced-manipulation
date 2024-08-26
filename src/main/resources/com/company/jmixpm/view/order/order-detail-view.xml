@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://orderDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="orderDc"
+                  class="com.company.jmixpm.entity.Order">
+            <fetchPlan extends="_base">
+                <property name="customer" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="orderDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="orderDc">
+            <textField id="orderNumberField" property="orderNumber"/>
+            <datePicker id="dateField" property="date"/>
+            <entityPicker id="customerField" property="customer">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

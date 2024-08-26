@@ -4,6 +4,9 @@ import com.company.jmixpm.entity.Project;
 import com.company.jmixpm.entity.ProjectStats;
 import com.company.jmixpm.entity.Task;
 import io.jmix.core.DataManager;
+import io.jmix.core.FetchPlan;
+import io.jmix.core.FetchPlanRepository;
+import io.jmix.core.FetchPlans;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +16,20 @@ import java.util.UUID;
 @Service
 public class ProjectStatsService {
     private final DataManager dataManager;
+    private final FetchPlans fetchPlans;
+    private final FetchPlanRepository fetchPlanRepository;
 
-    public ProjectStatsService(DataManager dataManager) {
+    public ProjectStatsService(DataManager dataManager, FetchPlans fetchPlans, FetchPlanRepository fetchPlanRepository) {
         this.dataManager = dataManager;
+        this.fetchPlans = fetchPlans;
+        this.fetchPlanRepository = fetchPlanRepository;
     }
 
     public List<ProjectStats> fetchProjectStatistics() {
-        List<Project> projects = dataManager.load(Project.class).all().list();
+        List<Project> projects = dataManager.load(Project.class)
+                .all()
+                .fetchPlan("project-with-tasks-fetch-plan")
+                .list();
         List<ProjectStats> projectStats = projects.stream()
                 .map(project -> {
                     ProjectStats stats = dataManager.create(ProjectStats.class);
@@ -48,4 +58,14 @@ public class ProjectStatsService {
                 .parameter("projId", projectId)
                 .one();
     }
+
+    private FetchPlan createFetchPlanWithTasks() {
+        return fetchPlans.builder(Project.class)
+                .addFetchPlan(FetchPlan.INSTANCE_NAME)
+                .add("tasks", fetchPlanBuilder ->
+                        fetchPlanBuilder.add("estimatedEfforts").add("startDate"))
+                .build();
+    }
+
+
 }

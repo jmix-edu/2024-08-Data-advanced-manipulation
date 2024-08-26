@@ -41,6 +41,10 @@ dependencies {
     }
     testImplementation 'io.jmix.flowui:jmix-flowui-test-assist'
     implementation 'org.postgresql:postgresql'
+    implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-starter'
+    implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-flowui-starter'
+    implementation 'io.jmix.quartz:jmix-quartz-flowui-starter'
+    implementation 'io.jmix.quartz:jmix-quartz-starter'
 }
 
 test {

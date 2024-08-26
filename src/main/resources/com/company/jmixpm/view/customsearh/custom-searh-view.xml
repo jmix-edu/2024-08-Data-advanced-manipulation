@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition">
+    title="msg://customSearhView.title">
+    <data>
+        <collection id="customersDc"
+                    class="com.company.jmixpm.entity.Customer">
+            <fetchPlan extends="_base"/>
+            <loader id="customersDl">
+                <query>
+                    <![CDATA[select e from Customer e]]>
+<!--                    <condition>-->
+<!--                        <and>-->
+<!--                            <c:jpql>-->
+<!--                                <c:where>e.firstName like :component_customerFirstNameField</c:where>-->
+<!--                            </c:jpql>-->
+<!--                        </and>-->
+<!--                    </condition>-->
+                </query>
+            </loader>
+        </collection>
+        <collection id="ordersDc"
+                    class="com.company.jmixpm.entity.Order">
+            <fetchPlan extends="_base">
+                <property name="customer" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="ordersDl">
+                <query>
+                    <![CDATA[
+                select e from Order_ e
+                    where e.customer = :container_customersDc
+            ]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+            <refresh loader="customersDl">
+                <onViewEvent type="Init"/>
+            </refresh>
+<!--            <refresh loader="ordersDl">-->
+<!--                <onContainerItemChanged container="customersDc"/>-->
+<!--            </refresh>-->
+        </dataLoadCoordinator>
+    </facets>
+    <layout>
+        <hbox id="tablesBox" width="100%" height="100%">
+            <vbox height="100%"
+                  width="100%"
+                  spacing="true"
+                  expand="customersTable">
+                <entityComboBox id="customerField"
+                                label="msg://customerField.label"
+                                metaClass="Customer"
+                                itemsContainer="customersDc"/>
+                <dataGrid id="customersTable"
+                          dataContainer="customersDc"
+                          minHeight="20em"
+                          width="100%">
+                    <columns>
+                        <column property="lastName"/>
+                        <column property="firstName"/>
+                        <column property="email"/>
+                    </columns>
+                </dataGrid>
+            </vbox>
+            <dataGrid id="ordersTable"
+                      dataContainer="ordersDc"
+                      minHeight="20em"
+                      height="100%"
+                      width="100%">
+                <columns>
+                    <column property="orderNumber"/>
+                    <column property="customer"/>
+                    <column property="date"/>
+                </columns>
+            </dataGrid>
+        </hbox>
+    </layout>
+</view>

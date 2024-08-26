@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://userProjectsDialog.title">
+    <data>
+        <collection id="projectsDc"
+                    class="com.company.jmixpm.entity.Project">
+            <fetchPlan extends="_base">
+                <property name="manager" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="projectDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Project e where
+                    (select u from User u where u = :user) MEMBER OF e.participants
+                     or e.manager = :user]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <dataGrid id="projectsDataGrid"
+                  dataContainer="projectsDc"
+                  minHeight="20em"
+                  width="100%">
+            <columns>
+                <column property="name"/>
+                <column property="startDate"/>
+                <column property="endDate"/>
+                <column property="manager"/>
+            </columns>
+        </dataGrid>
+    </layout>
+</view>

@@ -13,6 +13,9 @@
             </fetchPlan>
             <loader id="projectsDl" readOnly="true">
                 <query>
+<!--                    <![CDATA[select e from Project e-->
+<!--&lt;!&ndash;                    where function('actual_efforts', e.id) > e.totalEstimatedEfforts &ndash;&gt;-->
+<!--]]>-->
                     <![CDATA[select e from Project e]]>
                 </query>
             </loader>
@@ -38,6 +41,7 @@
             <button id="createBtn" action="projectsDataGrid.create"/>
             <button id="editBtn" action="projectsDataGrid.edit"/>
             <button id="removeBtn" action="projectsDataGrid.remove"/>
+            <button id="dmCreate" text="msg://dataManagerCreate"/>
             <simplePagination id="pagination" dataLoader="projectsDl"/>
         </hbox>
         <dataGrid id="projectsDataGrid"
